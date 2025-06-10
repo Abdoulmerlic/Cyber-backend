@@ -9,7 +9,9 @@ var user_1 = require("./routes/user");
 dotenv.config();
 var app = express();
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://cyber-frontend-imyf1qv18-abdoulmerlics-projects.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }));
 app.use(express.json());
