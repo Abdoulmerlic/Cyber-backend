@@ -8,7 +8,8 @@
     "dev": "nodemon --exec ts-node server.ts",
     "build": "tsc",
     "build:start": "npm run build && npm start",
-    "test": "jest"
+    "test": "jest",
+    "vercel-build": "tsc"
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.9",
