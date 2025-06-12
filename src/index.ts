@@ -7,9 +7,15 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
+const corsOptions = {
+  origin: 'https://cyber-frontend-imyf1qv18-abdoulmerlics-projects.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+};
 
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Basic route

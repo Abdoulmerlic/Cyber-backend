@@ -23,7 +23,7 @@ app.use(morgan('dev'));
 
 // CORS configuration
 const allowedOrigins = [
-  process.env.FRONTEND_URL || 'http://localhost:3000',
+  process.env.FRONTEND_URL || 'https://cyber-frontend-imyf1qv18-abdoulmerlics-projects.vercel.app',  
 ];
 
 app.use(cors({
