@@ -56,6 +56,11 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
 
+// Health check endpoint
+app.get('/healthz', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 // Error handling
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
