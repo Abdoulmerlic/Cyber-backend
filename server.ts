@@ -47,7 +47,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser() as any);
 
 // Routes
-app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes);
 app.use('/api/articles', articleRoutes);
 app.use('/api/security-tips', securityTipRoutes);
 app.use('/api/bookmarks', bookmarkRoutes);
