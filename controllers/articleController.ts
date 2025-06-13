@@ -153,8 +153,8 @@ export const updateArticle = async (req: AuthRequest, res: Response) => {
       return res.status(404).json({ message: 'Article not found' });
     }
 
-    // Check if the user is the author
-    if (article.author.id.toString() !== req.user?.id) {
+    // Check if the user is the author or admin
+    if (article.author.id.toString() !== req.user?.id && !req.user?.isAdmin) {
       return res.status(403).json({ message: 'Not authorized to update this article' });
     }
 
@@ -189,8 +189,8 @@ export const deleteArticle = async (req: AuthRequest, res: Response) => {
       return res.status(404).json({ message: 'Article not found' });
     }
 
-    // Check if the user is the author
-    if (article.author.id.toString() !== req.user?.id) {
+    // Check if the user is the author or admin
+    if (article.author.id.toString() !== req.user?.id && !req.user?.isAdmin) {
       return res.status(403).json({ message: 'Not authorized to delete this article' });
     }
 

@@ -13,6 +13,7 @@ export interface IUser extends Document {
   createdAt: Date;
   updatedAt: Date;
   comparePassword(candidatePassword: string): Promise<boolean>;
+  isAdmin?: boolean;
 }
 
 const UserSchema = new Schema<IUser>({
@@ -54,6 +55,10 @@ const UserSchema = new Schema<IUser>({
   },
   twoFactorSecret: {
     type: String
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true,

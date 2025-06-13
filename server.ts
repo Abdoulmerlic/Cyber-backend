@@ -6,6 +6,7 @@ import authRoutes from './routes/auth';
 import articleRoutes from './routes/article';
 import securityTipRoutes from './routes/securityTips';
 import bookmarkRoutes from './routes/bookmarks';
+import userRoutes from './routes/user';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
@@ -54,6 +55,7 @@ app.use('/auth', authRoutes);
 app.use('/articles', articleRoutes);
 app.use('/security-tips', securityTipRoutes);
 app.use('/bookmarks', bookmarkRoutes);
+app.use('/api/users', userRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

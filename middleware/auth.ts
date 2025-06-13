@@ -9,6 +9,7 @@ export interface AuthRequest extends Request {
     id: string;
     username: string;
     email: string;
+    isAdmin: boolean;
   };
   file?: Express.Multer.File;
 }
@@ -31,7 +32,8 @@ const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunctio
     req.user = {
       id: user._id.toString(),
       username: user.username,
-      email: user.email
+      email: user.email,
+      isAdmin: user.isAdmin || false
     };
     
     next();
@@ -39,6 +41,13 @@ const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunctio
     console.error(error);
     res.status(401).json({ message: 'Token is not valid' });
   }
+};
+
+export const adminMiddleware = (req: AuthRequest, res: Response, next: NextFunction) => {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).json({ message: 'Admin privileges required' });
+  }
+  next();
 };
 
 export default authMiddleware;

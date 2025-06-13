@@ -9,7 +9,7 @@ import {
   addComment,
   deleteComment
 } from '../controllers/articleController';
-import authMiddleware from '../middleware/auth';
+import authMiddleware, { adminMiddleware } from '../middleware/auth';
 import upload, { checkFileSize } from '../middleware/upload';
 
 const router = express.Router();

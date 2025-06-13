@@ -20,11 +20,11 @@ interface AuthRequest extends Request {
 }
 
 // Helper functions for tokens
-const createAccessToken = (userId: string) =>
-  jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '15m' });
+const createAccessToken = (user: { id: string, isAdmin: boolean }) =>
+  jwt.sign({ id: user.id, isAdmin: user.isAdmin }, JWT_SECRET, { expiresIn: '15m' });
 
-const createRefreshToken = (userId: string) =>
-  jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '30m' });
+const createRefreshToken = (user: { id: string, isAdmin: boolean }) =>
+  jwt.sign({ id: user.id, isAdmin: user.isAdmin }, JWT_SECRET, { expiresIn: '30m' });
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -79,8 +79,8 @@ export const register = async (req: Request, res: Response) => {
     console.log('User saved successfully:', { id: user._id, username: user.username, email: user.email });
 
     // Issue tokens
-    const accessToken = createAccessToken(user._id);
-    const refreshToken = createRefreshToken(user._id);
+    const accessToken = createAccessToken({ id: user._id, isAdmin: user.isAdmin });
+    const refreshToken = createRefreshToken({ id: user._id, isAdmin: user.isAdmin });
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -95,7 +95,8 @@ export const register = async (req: Request, res: Response) => {
         username: user.username,
         email: user.email,
         profilePicture: user.profilePicture,
-        bio: user.bio
+        bio: user.bio,
+        isAdmin: user.isAdmin
       }
     });
   } catch (error) {
@@ -168,8 +169,8 @@ export const login = async (req: Request, res: Response) => {
     }
 
     // Generate tokens
-    const accessToken = createAccessToken(user._id);
-    const refreshToken = createRefreshToken(user._id);
+    const accessToken = createAccessToken({ id: user._id, isAdmin: user.isAdmin });
+    const refreshToken = createRefreshToken({ id: user._id, isAdmin: user.isAdmin });
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -183,7 +184,8 @@ export const login = async (req: Request, res: Response) => {
         username: user.username,
         email: user.email,
         profilePicture: user.profilePicture,
-        bio: user.bio
+        bio: user.bio,
+        isAdmin: user.isAdmin
       }
     });
   } catch (error) {
@@ -261,8 +263,8 @@ export const refreshToken = async (req: Request, res: Response) => {
     const user = await User.findById(decoded.id);
     if (!user) return res.status(401).json({ message: 'User not found' });
     // Issue new tokens
-    const newAccessToken = createAccessToken(user._id);
-    const newRefreshToken = createRefreshToken(user._id);
+    const newAccessToken = createAccessToken({ id: user._id, isAdmin: user.isAdmin });
+    const newRefreshToken = createRefreshToken({ id: user._id, isAdmin: user.isAdmin });
     res.cookie('refreshToken', newRefreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
