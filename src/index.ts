@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 const allowedOrigins = [
   ...(process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',') : ['http://localhost:3000']),
-  'https://cyber-frontend-4k6cremgm-abdoulmerlics-projects.vercel.app',
+  'https://cyber-frontend-rho.vercel.app',
   'https://cyber-frontend.onrender.com'
 ];
 
