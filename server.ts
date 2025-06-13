@@ -1,5 +1,5 @@
 import express from 'express';
-import cors from 'cors';
+import cors, { CorsOptions } from 'cors';
 import { config } from 'dotenv';
 import { connectDB } from './config/database';
 import authRoutes from './routes/auth';
@@ -28,8 +28,8 @@ const allowedOrigins = [
   'https://cyber-frontend.onrender.com'
 ];
 
-app.use(cors({
-  origin: (origin, callback) => {
+const corsOptions: CorsOptions = {
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -39,7 +39,9 @@ app.use(cors({
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
-}));
+};
+
+app.use(cors(corsOptions));
 
 // Middleware
 app.use(express.json());

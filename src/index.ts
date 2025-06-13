@@ -1,5 +1,5 @@
 import express from 'express';
-import cors from 'cors';
+import cors, { CorsOptions } from 'cors';
 import dotenv from 'dotenv';
 
 // Load environment variables
@@ -13,8 +13,8 @@ const allowedOrigins = [
   'https://cyber-frontend.onrender.com'
 ];
 
-const corsOptions = {
-  origin: (origin, callback) => {
+const corsOptions: CorsOptions = {
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
