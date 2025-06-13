@@ -23,8 +23,9 @@ app.use(morgan('dev'));
 
 // CORS configuration
 const allowedOrigins = [
-  process.env.FRONTEND_URL || 'http://localhost:3000',
-  'https://cyber-frontend-4k6cremgm-abdoulmerlics-projects.vercel.app'
+  ...(process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',') : ['http://localhost:3000']),
+  'https://cyber-frontend-4k6cremgm-abdoulmerlics-projects.vercel.app',
+  'https://cyber-frontend.onrender.com'
 ];
 
 app.use(cors({
