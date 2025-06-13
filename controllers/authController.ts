@@ -79,8 +79,8 @@ export const register = async (req: Request, res: Response) => {
     console.log('User saved successfully:', { id: user._id, username: user.username, email: user.email });
 
     // Issue tokens
-    const accessToken = createAccessToken({ id: user._id, isAdmin: user.isAdmin });
-    const refreshToken = createRefreshToken({ id: user._id, isAdmin: user.isAdmin });
+    const accessToken = createAccessToken({ id: user._id, isAdmin: user.isAdmin || false });
+    const refreshToken = createRefreshToken({ id: user._id, isAdmin: user.isAdmin || false });
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -169,8 +169,8 @@ export const login = async (req: Request, res: Response) => {
     }
 
     // Generate tokens
-    const accessToken = createAccessToken({ id: user._id, isAdmin: user.isAdmin });
-    const refreshToken = createRefreshToken({ id: user._id, isAdmin: user.isAdmin });
+    const accessToken = createAccessToken({ id: user._id, isAdmin: user.isAdmin || false });
+    const refreshToken = createRefreshToken({ id: user._id, isAdmin: user.isAdmin || false });
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -263,8 +263,8 @@ export const refreshToken = async (req: Request, res: Response) => {
     const user = await User.findById(decoded.id);
     if (!user) return res.status(401).json({ message: 'User not found' });
     // Issue new tokens
-    const newAccessToken = createAccessToken({ id: user._id, isAdmin: user.isAdmin });
-    const newRefreshToken = createRefreshToken({ id: user._id, isAdmin: user.isAdmin });
+    const newAccessToken = createAccessToken({ id: user._id, isAdmin: user.isAdmin || false });
+    const newRefreshToken = createRefreshToken({ id: user._id, isAdmin: user.isAdmin || false });
     res.cookie('refreshToken', newRefreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
