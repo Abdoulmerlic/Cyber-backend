@@ -26,7 +26,8 @@ app.use(morgan('dev'));
 const allowedOrigins = [
   ...(process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',') : ['http://localhost:3000']),
   'https://cyber-frontend-rho.vercel.app',
-  'https://cyber-frontend.onrender.com'
+  'https://cyber-frontend.onrender.com',
+  'http://localhost:3000/admin/'
 ];
 
 const corsOptions: CorsOptions = {
