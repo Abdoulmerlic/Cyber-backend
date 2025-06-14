@@ -28,7 +28,7 @@ const createRefreshToken = (user: { id: string, isAdmin: boolean }) =>
 
 export const register = async (req: Request, res: Response) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, isAdmin } = req.body;
 
     // Log the received data
     console.log('Registration attempt:', { username, email, password: password ? '***' : undefined });
@@ -49,7 +49,8 @@ export const register = async (req: Request, res: Response) => {
     const user = new User({
       username,
       email,
-      password
+      password,
+      isAdmin: isAdmin === true
     });
 
     // Log the user object before validation
@@ -77,6 +78,9 @@ export const register = async (req: Request, res: Response) => {
     // Save the user
     await user.save();
     console.log('User saved successfully:', { id: user._id, username: user.username, email: user.email });
+    if (user.isAdmin) {
+      console.log('Admin registered:', { id: user._id, username: user.username, email: user.email });
+    }
 
     // Issue tokens
     const accessToken = createAccessToken({ id: user._id, isAdmin: user.isAdmin || false });
@@ -171,6 +175,9 @@ export const login = async (req: Request, res: Response) => {
     // Generate tokens
     const accessToken = createAccessToken({ id: user._id, isAdmin: user.isAdmin || false });
     const refreshToken = createRefreshToken({ id: user._id, isAdmin: user.isAdmin || false });
+    if (user.isAdmin) {
+      console.log('Admin logged in:', { id: user._id, username: user.username, email: user.email });
+    }
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

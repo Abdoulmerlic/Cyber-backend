@@ -51,10 +51,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser() as any);
 
 // Routes
-app.use('/auth', authRoutes);
-app.use('/articles', articleRoutes);
-app.use('/security-tips', securityTipRoutes);
-app.use('/bookmarks', bookmarkRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/articles', articleRoutes);
+app.use('/api/security-tips', securityTipRoutes);
+app.use('/api/bookmarks', bookmarkRoutes);
 app.use('/api/users', userRoutes);
 
 // Health check endpoint
