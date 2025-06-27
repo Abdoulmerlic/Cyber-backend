@@ -53,9 +53,11 @@ app.use(cookieParser() as any);
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/articles', articleRoutes);
+app.use('/api/admin', articleRoutes);
 app.use('/api/security-tips', securityTipRoutes);
 app.use('/api/bookmarks', bookmarkRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/admin/users', userRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

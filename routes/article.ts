@@ -30,4 +30,10 @@ router.post('/:id/like', authMiddleware, likeArticle);
 router.post('/:id/comments', authMiddleware, addComment);
 router.delete('/:id/comments/:commentId', authMiddleware, deleteComment);
 
+// Admin routes
+router.get('/admin/articles', authMiddleware, adminMiddleware, getArticles);
+router.get('/admin/articles/:id', authMiddleware, adminMiddleware, getArticleById);
+router.put('/admin/articles/:id', authMiddleware, adminMiddleware, upload.single('media'), checkFileSize, updateArticle);
+router.delete('/admin/articles/:id', authMiddleware, adminMiddleware, deleteArticle);
+
 export default router; 
